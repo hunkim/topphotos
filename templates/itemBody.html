@@ -1,0 +1,16 @@
+<div class="item item-body no-padding">
+  <a ng-show="p.video" class="button full-image icon ion-play" ng-click="$parent.playVideo(p.video);">
+    <img id="image" class="full-image video" ng-src="{{p.img}}">
+  </a> 
+  
+  <img ng-show="!p.video" class="full-image" ng-src="{{p.img}}">
+      
+  {{p.text | htmlToPlain}}
+  <!-- <a class="button icon ion-ios-upload" ng-href="{{p.link}}" 
+        onclick="window.open(this.href, '_system', 'location=yes'); return false;"></a> -->
+  <!--
+    <a ng-show="!p.video" href="#" ng-click="$parent.showImg(p.img);">  
+       <img class="full-image" ng-src="{{p.img}}">
+      </a>
+  -->
+</div> 

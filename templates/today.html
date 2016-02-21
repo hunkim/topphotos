@@ -1,0 +1,58 @@
+<ion-header-bar>
+  <div class="buttons">
+    <label class="toggle">
+       <input type="checkbox" ng-model="var.order" ng-change="var.switchLoading=true;getImages(true);">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+    </label>
+    &nbsp;
+    <span ng-show="var.order">Popular</span>
+    <span ng-hide="var.order">Recent</span>
+
+    <ion-spinner ng-show="var.switchLoading"></ion-spinner>
+  </div>
+
+  <h2 class="title">Today</h2>
+
+  <div class="buttons">     
+    <a class="button button-stable icon ion-trophy" href="#/bob">Daily Best</a>   
+  </div>    
+</ion-header-bar>
+
+
+<ion-content class="has-header" delegate-handle="mainScroll" zooming="false">
+
+  <ion-refresher pulling-text="Pull to refresh..." on-refresh="getImages(true)">
+  </ion-refresher>
+
+  <div ng-if="var.errorTrialCount">
+    <button class="button button-full button-energized icon ion-alert-circled" ng-click="getImages(true)">
+      Internet disconnected (tried {{var.errorTrialCount}} times). <p>Press here to reconnect!
+    </button>
+  </div>
+
+  <!-- show spinner when there is no data
+        Do not show if there is an error.  -->
+  <ion-spinner class="overlay_center" ng-hide="smiles.length || var.errorTrialCount"></ion-spinner>
+
+  <div class="list card"  ng-repeat="p in smiles">
+    <item-head p="p"></item-head>
+    <item-body p="p"></item-body>
+  </div>
+
+  <ion-infinite-scroll
+    ng-if="!var.errorTrialCount"
+    on-infinite="getImages();"
+    distance="1%">
+  </ion-infinite-scroll>
+
+  <div ng-if="var.errorTrialCount && smiles.length">
+    <button class="button button-full button-energized icon ion-alert-circled" ng-click="getImages()">
+      Internet disconnected (tried {{var.errorTrialCount}} times). <p>Press here to reconnect!
+    </button>
+  </div>
+
+ </ion-content>
+
+
