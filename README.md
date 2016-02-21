@@ -3,7 +3,8 @@
 Demo https://topp.firebaseapp.com
 ====
 
-Android and iOS Apps will be avaialble soon.
-----
+# Android
+ - https://play.google.com/store/apps/details?id=com.ionicframework.smile432887
 
+# iOS Apps will be avaialble soon.
 
