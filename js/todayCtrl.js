@@ -10,7 +10,8 @@ app.controller("TodayCtrl", function ($scope, $sce, $document, $timeout, $http,
 
   $scope.var = {'order':true, 
                 'errorTrialCount': 0, // how many trials for error?
-                'switchLoading': false}; // to show spins to switch option
+                'switchLoading': false,
+                'buttonLoading': false}; // to show spins to switch option
 
   // Main image loader
   // Will be loaded bu 
@@ -20,7 +21,6 @@ app.controller("TodayCtrl", function ($scope, $sce, $document, $timeout, $http,
     }
 
     var url = smileURL+($scope.var.order ? "orders-":"photos-")+jsonIndex+".json"
-    
     //console.log(url);
 
     var promise = $http.get(url, {cache: false}) 
@@ -31,12 +31,13 @@ app.controller("TodayCtrl", function ($scope, $sce, $document, $timeout, $http,
           // data cleaning should be inside so that when there is no connection, 
           // still users can see something.
           if(refresh==true || $scope.smiles.length > maxPhotos) {
-            $scope.smiles =[];
             $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+            $scope.smiles =[];
           }
 
           $scope.smiles =  $scope.smiles.concat(response);
           jsonIndex++; // ready to get the next page
+          //console.log("Sucess");
         })
         .error(function(data, status, headers, config) {
           $scope.var.errorTrialCount++;  
@@ -46,10 +47,13 @@ app.controller("TodayCtrl", function ($scope, $sce, $document, $timeout, $http,
             $scope.getImages(true); // refresh? only it's smaller than 3
           }
         }).finally(function() {
-           // Stop the ion-refresher from spinning
-           $scope.$broadcast('scroll.refreshComplete');
-           $scope.$broadcast('scroll.infiniteScrollComplete');
-           $scope.var.switchLoading = false; // we are done anyway
+          // Stop the ion-refresher from spinning
+          $scope.$broadcast('scroll.refreshComplete');
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+          $scope.var.switchLoading = false; // we are done anyway
+          $scope.var.buttonLoading = false; // we are done 
+
+          //console.log("Finally");
         });
   }
 

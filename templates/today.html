@@ -34,7 +34,7 @@
 
   <!-- show spinner when there is no data
         Do not show if there is an error.  -->
-  <ion-spinner class="overlay_center" ng-hide="smiles.length || var.errorTrialCount"></ion-spinner>
+  <!-- <ion-spinner class="overlay_center" ng-hide="smiles.length || var.errorTrialCount"></ion-spinner> -->
 
   <div class="list card"  ng-repeat="p in smiles">
     <item-head p="p"></item-head>
@@ -44,7 +44,7 @@
   <ion-infinite-scroll
     ng-if="!var.errorTrialCount"
     on-infinite="getImages();"
-    distance="1%">
+    distance="10%">
   </ion-infinite-scroll>
 
   <div ng-if="var.errorTrialCount && smiles.length">
@@ -53,6 +53,10 @@
     </button>
   </div>
 
+  <div class="text-right">
+    <ion-spinner ng-show="var.buttonLoading"></ion-spinner>
+    <a class="button icon-right ion-chevron-right button-calm" ng-click="var.buttonLoading=true; getImages();">More Pictures</a>
+  </div>
  </ion-content>
 
 
