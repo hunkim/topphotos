@@ -21,7 +21,7 @@
 </ion-header-bar>
 
 
-<ion-content class="has-header" delegate-handle="mainScroll" zooming="false">
+<ion-content class="has-header"  overflow-scroll="false" delegate-handle="mainScroll" zooming="false">
   <div ng-if="var.errorTrialCount">
     <button class="button button-full button-energized icon ion-alert-circled" ng-click="getBob()">
       Internet disconnected (tried {{var.errorTrialCount}} times). <p>Press here to reconnect!
