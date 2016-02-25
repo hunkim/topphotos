@@ -1,8 +1,11 @@
-app.controller("BobCtrl", function ($scope, $sce, $document, $timeout, $http, 
+app.controller("BobCtrl", function ($scope, $sce, $document, $socialshare, $timeout, $http, 
   $ionicModal, $ionicScrollDelegate) {
 
   const smileURL = "https://topphotos.firebaseapp.com/";
-  var jsonIndex = 1;
+
+  // Need to get the pointer
+  $scope.share = $socialshare.share;
+  $scope.isWebView = ionic.Platform.isWebView();
 
   $scope.smiles=[];  
 
@@ -14,6 +17,7 @@ app.controller("BobCtrl", function ($scope, $sce, $document, $timeout, $http,
   // Will be loaded bu 
   $scope.getBob = function() {
     var url = smileURL+($scope.var.order ? "bob-order":"bob-recent")+".jo"
+    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
     
     var promise = $http.get(url, {cache: false}) 
         .success(function(response) {
@@ -29,6 +33,7 @@ app.controller("BobCtrl", function ($scope, $sce, $document, $timeout, $http,
   }
 
   //load once
+  $scope.var.switchLoading = true;
   $scope.getBob();
 
   // https://blog.nraboy.com/2014/09/handling-apache-cordova-events-ionicframework/

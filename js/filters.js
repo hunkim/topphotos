@@ -6,3 +6,27 @@ app.filter('htmlToPlain', function() {
     };
   }
 )
+
+.filter('search', function () {
+  return function (input, key) {
+  	// No key, return quickly
+  	if (!key) {
+       return input;
+    }
+
+    var found = [];
+   
+    angular.forEach(input, function (line) {
+    	var reg = new RegExp(key, "i");
+    	console.log("Here");
+     	if (line.source.search(reg) != -1 ||
+     		line.username.search(reg) != -1 ||
+     		(line.text!==undefined && line.text.search(reg) != -1)) {
+        	found.push(line);
+      	} 
+    });
+
+    // Combined list
+    return found;
+  };
+});

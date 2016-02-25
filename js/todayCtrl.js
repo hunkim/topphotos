@@ -1,17 +1,32 @@
 
-app.controller("TodayCtrl", function ($scope, $sce, $document, $timeout, $http, 
+app.controller("TodayCtrl", function ($scope, $socialshare, $sce, $document, $timeout, $http, 
   $ionicModal, $ionicScrollDelegate) {
 
   const smileURL = "https://topphotos.firebaseapp.com/";
   const maxPhotos = 100;
   var jsonIndex = 1;
 
+  // Need to get the pointer
+  $scope.share = $socialshare.share;
+
   $scope.smiles=[];  
 
-  $scope.var = {'order':true, 
+  $scope.var = {'search':'',
+                'order':true, 
                 'errorTrialCount': 0, // how many trials for error?
                 'switchLoading': false,
                 'buttonLoading': false}; // to show spins to switch option
+
+  $scope.sharable= function() {
+    return window.plugins!=undefined && window.plugins.socialsharing!=undefined;
+  };
+
+  // initialize social share
+  $scope.isIOS = ionic.Platform.isIOS();
+  $scope.isAndroid = ionic.Platform.isAndroid();
+  $scope.isMobile = $scope.isIOS  ||  $scope.isAndroid;
+  $scope.isWebView = ionic.Platform.isWebView();
+
 
   // Main image loader
   // Will be loaded bu 
@@ -63,6 +78,7 @@ app.controller("TodayCtrl", function ($scope, $sce, $document, $timeout, $http,
     $scope.getImages(true);
   }, false);
 
+
   // http://stackoverflow.com/questions/21292114/external-resource-not-being-loaded-by-angularjs
   // play video with the clipsrc
   $scope.playVideo = function(clipsrc) {
@@ -101,4 +117,10 @@ app.controller("TodayCtrl", function ($scope, $sce, $document, $timeout, $http,
     $scope.modal.hide();
     $scope.modal.remove()
   };
+
 })
+
+
+
+
+

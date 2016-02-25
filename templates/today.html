@@ -1,4 +1,19 @@
-<ion-header-bar>
+<!--
+<div class="bar bar-header item-input-inset">
+  <label class="item-input-wrapper">
+    <i class="icon ion-ios-search placeholder-icon"></i>
+    <input type="search" placeholder="Search" ng-model="var.search">
+  </label>
+</div>
+-->
+<!--
+<div class="bar bar-footer bar-balanced"">
+  <a href="Top_Photos-0.0.1.apk" class="button icon ion-social-android button-clear"></a>
+  <div class="title"><a href="Top_Photos-0.0.1.apk">Download Android APK (Beta)</a></div>
+</div>
+-->
+
+<ion-header-bar  class="bar  bar-light">
   <div class="buttons">
     <label class="toggle">
        <input type="checkbox" ng-model="var.order" ng-change="var.switchLoading=true;getImages(true);">
@@ -20,6 +35,15 @@
   </div>    
 </ion-header-bar>
 
+<!--
+<div class="list list-inset" class="has-header">
+  <label class="item item-input">
+    <i class="icon ion-search placeholder-icon"></i>
+    <input type="text" placeholder="Search" ng-model="var.search">
+  </label>
+</div>
+-->
+
 
 <ion-content class="has-header" delegate-handle="mainScroll" zooming="false">
 
@@ -35,6 +59,8 @@
   <!-- show spinner when there is no data
         Do not show if there is an error.  -->
   <!-- <ion-spinner class="overlay_center" ng-hide="smiles.length || var.errorTrialCount"></ion-spinner> -->
+
+  <!-- <div class="list card"  ng-repeat="p in smiles | search:var.search:comparator"> -->
 
   <div class="list card"  ng-repeat="p in smiles">
     <item-head p="p"></item-head>
