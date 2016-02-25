@@ -45,7 +45,7 @@
 -->
 
 
-<ion-content class="has-header" delegate-handle="mainScroll" zooming="false">
+<ion-content class="has-header" overflow-scroll="false" delegate-handle="mainScroll" zooming="false">
 
   <ion-refresher pulling-text="Pull to refresh..." on-refresh="getImages(true)">
   </ion-refresher>
@@ -62,7 +62,7 @@
 
   <!-- <div class="list card"  ng-repeat="p in smiles | search:var.search:comparator"> -->
 
-  <div class="list card"  ng-repeat="p in smiles">
+  <div class="list card"  scroll="false" ng-repeat="p in smiles">
     <item-head p="p"></item-head>
     <item-body p="p"></item-body>
   </div>
