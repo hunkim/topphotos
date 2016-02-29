@@ -38,9 +38,11 @@ app.controller("BobCtrl", function ($scope, $sce, $document, $socialshare, $time
 
   // https://blog.nraboy.com/2014/09/handling-apache-cordova-events-ionicframework/
   // Update when this comes back to foreground
+  /*
   document.addEventListener("resume", function() {
     $scope.getBob();
   }, false);
+*/
 
   // http://stackoverflow.com/questions/21292114/external-resource-not-being-loaded-by-angularjs
   // play video with the clipsrc
