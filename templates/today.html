@@ -62,7 +62,7 @@
 
   <!-- <div class="list card"  ng-repeat="p in smiles | search:var.search:comparator"> -->
 
-  <div class="list card"  scroll="false" ng-repeat="p in smiles">
+  <div ng-hide="p.hide" class="list card" scroll="false" ng-repeat="p in smiles">
     <item-head p="p"></item-head>
     <item-body p="p"></item-body>
   </div>

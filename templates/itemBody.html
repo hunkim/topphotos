@@ -1,19 +1,24 @@
 <div class="item item-body no-padding text-bottom bottom" scroll="false">
-  <a ng-show="p.video" class="button full-image icon ion-play" ng-click="$parent.playVideo(p.video);">
-    <img id="image" class="full-image video" ng-src="{{p.img}}">
-  </a> 
+  <button ng-show="p.video" class="button full-image icon ion-play" ng-click="$parent.playVideo(p.video);"></button>
   
-  <img ng-show="!p.video" class="full-image" ng-src="{{p.img}}">
+  <img  class="full-image" ng-src="{{p.img}}">
 
-  <p>
-    {{p.text | htmlToPlain}}
-    <a ng-show="$parent.isWebView" class="item item-icon-left positive" href="#" ng-click="$parent.share(p)">
-      <i class="icon ion-android-share-alt"></i> Share
-    </a>
-    <a ng-hide="$parent.isWebView" class="item item-icon-left positive" ng-href="{{p.link}}" target="_blank">
-      <i class="icon ion-ios-upload"></i> Original Link
-    </a>
-  </p>
+  {{p.text | htmlToPlain}}
+    <div class="row no-margin">
+      <div class="col text-left no-margin">
+        <button ng-show="$parent.isWebView" class="no-margin button button-positive-clear positive icon ion-android-share-alt" href="#" ng-click="$parent.share(p)">
+          Share
+        </button>
+        <button ng-hide="$parent.isWebView" class="no-margin button button-positive-clear positive icon ion-ios-upload" ng-href="{{p.link}}" target="_blank">
+          Original Link
+        </button>
+      </div>
+      <div class="col text-right no-margin">
+        <button class="no-margin button button-positive-clear positive icon ion-ios-close" href="#" ng-click="p.hide=true; $parent.hidePhoto(p);"> 
+          Hide Post
+        </button>
+      </div>
+    </div>
   
   <!-- <a class="button icon ion-ios-upload" ng-href="{{p.link}}" 
         onclick="window.open(this.href, '_system', 'location=yes'); return false;"></a> -->
