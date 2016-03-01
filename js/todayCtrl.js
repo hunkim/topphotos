@@ -1,24 +1,24 @@
 
-app.controller("TodayCtrl", function ($scope, $socialshare, $sce, $document, $timeout, $http, 
+app.controller("TodayCtrl", function ($scope, $hidelist, $socialshare, $sce, $document, $timeout, $http,
   $ionicModal, $ionicScrollDelegate) {
 
-  const smileURL = "https://topphotos.firebaseapp.com/";
-  const maxPhotos = 100;
+  var smileURL = "https://topphotos.firebaseapp.com/";
+  var maxPhotos = 100;
   var jsonIndex = 1;
 
   // Need to get the pointer
   $scope.share = $socialshare.share;
 
-  $scope.smiles=[];  
+  $scope.smiles=[];
 
   $scope.var = {'search':'',
-                'order':true, 
+                'order':true,
                 'errorTrialCount': 0, // how many trials for error?
                 'switchLoading': false,
                 'buttonLoading': false}; // to show spins to switch option
 
   $scope.sharable= function() {
-    return window.plugins!=undefined && window.plugins.socialsharing!=undefined;
+    return window.plugins!==undefined && window.plugins.socialsharing!==undefined;
   };
 
   // initialize social share
@@ -31,31 +31,34 @@ app.controller("TodayCtrl", function ($scope, $socialshare, $sce, $document, $ti
   // Main image loader
   // Will be loaded bu 
   $scope.getImages = function(refresh) {
-    if(refresh==true) { // reset the loading
+    if(refresh===true) { // reset the loading
       jsonIndex = 1;
     }
 
-    var url = smileURL+($scope.var.order ? "orders-":"photos-")+jsonIndex+".json"
+    var url = smileURL+($scope.var.order ? "orders-":"photos-")+jsonIndex+".json";
     //console.log(url);
 
-    var promise = $http.get(url, {cache: false}) 
+    var promise = $http.get(url, {cache: false})
         .success(function(response) {
           // clear the error cound if any
           $scope.var.errorTrialCount = 0;
 
           // data cleaning should be inside so that when there is no connection, 
           // still users can see something.
-          if(refresh==true || $scope.smiles.length > maxPhotos) {
+          if(refresh===true || $scope.smiles.length > maxPhotos) {
             $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
             $scope.smiles =[];
           }
+
+          // set *.hide = true if it is set.
+          $hidelist.markHides(response);
 
           $scope.smiles =  $scope.smiles.concat(response);
           jsonIndex++; // ready to get the next page
           //console.log("Sucess");
         })
         .error(function(data, status, headers, config) {
-          $scope.var.errorTrialCount++;  
+          $scope.var.errorTrialCount++;
 
           if (status=="404" && $scope.var.errorTrialCount < 3) {
             console.log(url + " 404"); // the end of list.
@@ -70,15 +73,34 @@ app.controller("TodayCtrl", function ($scope, $socialshare, $sce, $document, $ti
 
           //console.log("Finally");
         });
-  }
+  };
 
   // https://blog.nraboy.com/2014/09/handling-apache-cordova-events-ionicframework/
   // Update when this comes back to foreground
-  /*
+  
   document.addEventListener("resume", function() {
-    $scope.getImages(true);
+    var now = new Date();
+    var diff =  now - $scope.pausedTime;
+    var mm = Math.floor(diff / 1000 / 60);
+    //console.log("resume in " + mm + " mins.");
+    if (mm > 3) { // more than 3 min, refresh
+      $scope.getImages(true);
+    }
   }, false);
-*/
+
+
+  document.addEventListener("pause", function() {
+    $scope.pausedTime = new Date();
+  }, false);
+
+  $scope.hidePhoto = function(photo) {
+    $hidelist.add(photo.id);
+  };
+
+
+  $scope.isHidePhoto = function(photo) {
+    return $hidelist.isHide(photo.id);
+  };
 
   // http://stackoverflow.com/questions/21292114/external-resource-not-being-loaded-by-angularjs
   // play video with the clipsrc
@@ -86,12 +108,12 @@ app.controller("TodayCtrl", function ($scope, $socialshare, $sce, $document, $ti
     $scope.clipSrc = $sce.trustAsResourceUrl(clipsrc);
     //console.log($scope.clipSrc);
     $scope.showModal('templates/video-pop.html');
-  }
+  };
 
   $scope.showImg = function(imgURL) {
     $scope.imgURL = $sce.trustAsResourceUrl(imgURL);
     $scope.showModal('templates/img-pop.html');
-  }
+  };
   
   // https://devdactic.com/images-videos-fullscreen-ionic/
   // Showing videos and movies
@@ -111,15 +133,15 @@ app.controller("TodayCtrl", function ($scope, $socialshare, $sce, $document, $ti
       }
 
     });
-  }
+  };
  
   // Close the modal
   $scope.closeModal = function() {
     $scope.modal.hide();
-    $scope.modal.remove()
+    $scope.modal.remove();
   };
 
-})
+});
 
 
 
